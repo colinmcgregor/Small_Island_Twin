@@ -4,11 +4,13 @@ public class PlayerController : MonoBehaviour
 {
     public GameObject bulletPrefab;
     public Transform gunBarrel;
+    public int playerHealth;
 
     private Rigidbody playerRB;
     private Vector3 movement;
     private Vector3 moveVelocity;
     private Camera mainCamera;
+    private int currentHealth;
 
     private float movementSpeed = 5.0f;
     
@@ -16,6 +18,7 @@ public class PlayerController : MonoBehaviour
     {
         playerRB = this.GetComponent<Rigidbody>();
         mainCamera = Camera.main;
+        currentHealth = playerHealth;
     }
 
     void Update()
@@ -23,6 +26,11 @@ public class PlayerController : MonoBehaviour
         LookAtMouse();
         PlayerMove();
         ShootGun();
+
+        if (currentHealth <= 0)
+        {
+            gameObject.SetActive(false);            
+        }
     }
 
     void FixedUpdate()
@@ -55,5 +63,11 @@ public class PlayerController : MonoBehaviour
         {
             Instantiate(bulletPrefab, gunBarrel.position, gunBarrel.rotation);
         }
+    }
+
+    public void DamagePlayer (int damageAmount)
+    {
+        currentHealth -= damageAmount;
+        Debug.Log($"Current Health {currentHealth}");
     }
 }
