@@ -1,10 +1,14 @@
 using UnityEngine;
+using TMPro;
 
 public class PlayerController : MonoBehaviour
 {
     public int playerHealth;
+    public bool isAlive;
     public GameObject bulletPrefab;
     public Transform gunBarrel;
+    public TextMeshProUGUI healthText;
+    public TextMeshProUGUI killsText;
     
     private Vector3 movement;
     private Vector3 moveVelocity;
@@ -12,13 +16,20 @@ public class PlayerController : MonoBehaviour
     private Animator anim;
     
     private int currentHealth;
+    private int totalKills;
     private float movementSpeed = 5.0f;
+
     
     void Start()
     {
+        isAlive = true;
+        totalKills = 0;
         anim = this.GetComponent<Animator>();
         mainCamera = Camera.main;
         currentHealth = playerHealth;
+
+        healthText.text = $"Health: {currentHealth.ToString()}";
+        killsText.text = $"Kills: {totalKills.ToString()}";
     }
 
     void Update()
@@ -30,7 +41,8 @@ public class PlayerController : MonoBehaviour
         if (currentHealth <= 0)
         {
             anim.SetTrigger("Dead");
-            this.gameObject.GetComponent<PlayerController>().enabled = false;
+            isAlive = false;
+            Time.timeScale = 0;
         }
     }
 
@@ -66,6 +78,7 @@ public class PlayerController : MonoBehaviour
     public void DamagePlayer (int damageAmount)
     {
         currentHealth -= damageAmount;
+        healthText.text = $"Health: {currentHealth.ToString()}";
         //anim.SetTrigger("Get_Hit");
     }
 
@@ -76,5 +89,11 @@ public class PlayerController : MonoBehaviour
             anim.SetTrigger("Shooting");
             Instantiate(bulletPrefab, gunBarrel.position, gunBarrel.rotation);
         }
+    }
+
+    public void IncrementKills()
+    {
+        totalKills++;
+        killsText.text = $"Kills: {totalKills.ToString()}";
     }
 }

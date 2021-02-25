@@ -467,7 +467,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 3
-  totalHealth: 10
+  totalHealth: 5
   currentHealth: 0
 --- !u!1 &4500442380818242366
 GameObject:

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class EnemyController : MonoBehaviour
 {
@@ -30,6 +31,7 @@ public class EnemyController : MonoBehaviour
 
         if (currentHealth <= 0)
         {
+            player.IncrementKills();
             Destroy(this.gameObject);
         }
     }
