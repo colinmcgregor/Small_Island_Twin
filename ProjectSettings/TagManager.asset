@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Enemy
   - Game_Over
+  - Pause_Menu
   layers:
   - Default
   - TransparentFX
@@ -13,7 +14,7 @@ TagManager:
   - 
   - Water
   - UI
-  - 
+  - Image
   - 
   - 
   - 
