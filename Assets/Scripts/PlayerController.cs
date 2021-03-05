@@ -51,15 +51,25 @@ public class PlayerController : MonoBehaviour
         movement = new Vector3(Input.GetAxisRaw("Horizontal"), 0.0f, Input.GetAxisRaw("Vertical"));
         moveVelocity = movement * movementSpeed * Time.deltaTime;
 
-        if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.D))
+        if (movement.magnitude >= 0.1f)
         {
-            anim.SetBool("isWalking", true);
             transform.position += moveVelocity;
+            Walk();
         }
-        // else
-        // {
-        //     anim.SetBool("isWalking", false);
-        // }
+        else
+        {
+            Idle();
+        }
+    }
+
+    private void Idle()
+    {
+        anim.SetFloat("Speed", 0f, 0.1f, Time.deltaTime);
+    }
+
+    private void Walk()
+    {
+        anim.SetFloat("Speed", 0.5f, 0.1f, Time.deltaTime);
     }
 
     void LookAtMouse()
@@ -86,7 +96,7 @@ public class PlayerController : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Mouse0))
         {
-            anim.SetTrigger("Shooting");
+            anim.SetTrigger("Attack");
             Instantiate(bulletPrefab, gunBarrel.position, gunBarrel.rotation);
         }
     }
